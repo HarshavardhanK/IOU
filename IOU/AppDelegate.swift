@@ -9,15 +9,34 @@
 import UIKit
 import CoreData
 
+import Firebase
+import GoogleSignIn
+
 @UIApplicationMain
-class AppDelegate: UIResponder, UIApplicationDelegate {
+class AppDelegate: UIResponder, UIApplicationDelegate, GIDSignInDelegate {
+    
+    func sign(_ signIn: GIDSignIn!, didSignInFor user: GIDGoogleUser!, withError error: Error!) {
+        //
+    }
+    
 
     var window: UIWindow?
 
 
     func application(_ application: UIApplication, didFinishLaunchingWithOptions launchOptions: [UIApplicationLaunchOptionsKey: Any]?) -> Bool {
         // Override point for customization after application launch.
+        
+        //Setup the Google Sign-in
+        GIDSignIn.sharedInstance().clientID = "584409452787-dibhoi3h2a4pbsrf23c12k1nr2orqnp6.apps.googleusercontent.com"
+        GIDSignIn.sharedInstance().delegate = self
+        
         return true
+    }
+    
+    func application(_ app: UIApplication, open url: URL, options: [UIApplicationOpenURLOptionsKey : Any] = [:]) -> Bool {
+        return GIDSignIn.sharedInstance().handle(url as URL?,
+                                                 sourceApplication: options[UIApplicationOpenURLOptionsKey.sourceApplication] as? String,
+                                                 annotation: options[UIApplicationOpenURLOptionsKey.annotation])
     }
 
     func applicationWillResignActive(_ application: UIApplication) {
