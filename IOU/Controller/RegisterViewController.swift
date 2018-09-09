@@ -78,7 +78,7 @@ class RegisterViewController: UIViewController, GIDSignInDelegate, GIDSignInUIDe
         if segue.identifier == "goToList" {
             
             if let destinationViewcontroller = segue.destination as? ListViewController {
-                destinationViewcontroller.thisUser = thisUser
+                //destinationViewcontroller.thisUser = thisUser
                 print("Segue completed..")
                 
             }

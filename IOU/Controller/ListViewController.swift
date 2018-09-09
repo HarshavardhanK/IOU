@@ -11,8 +11,9 @@ import ViewAnimator
 
 class ListViewController: UIViewController, UITableViewDelegate, UITableViewDataSource {
     
-    var thisUser: User!
+
     let arr = [1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 5, 5, 5, 5, 5, 5, 5, 5]
+    var list: Array<People> = Array<People>()
     
     private let animations = [AnimationType.from(direction: .bottom, offset: 30.0)]
 
@@ -35,7 +36,7 @@ class ListViewController: UIViewController, UITableViewDelegate, UITableViewData
         //registerNib()
         
         //label.text = thisUser.email
-        
+        loadDummyData()
         /// Delegate
         listTableView.delegate = self
         listTableView.dataSource = self
@@ -56,7 +57,7 @@ class ListViewController: UIViewController, UITableViewDelegate, UITableViewData
     }
     
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        return arr.count
+        return list.count
     }
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
@@ -72,7 +73,7 @@ class ListViewController: UIViewController, UITableViewDelegate, UITableViewData
         
         cell.selectionStyle = .none
         
-        cell.name.text = "Cell: \(indexPath.row + 1)"
+        cell.name.text = list[indexPath.row].name
         cell.name.textColor = UIColor.white
         cell.name.textAlignment = .center
         cell.name.backgroundColor = cell.chooseColor()
@@ -104,13 +105,35 @@ class ListViewController: UIViewController, UITableViewDelegate, UITableViewData
         // Pass the selected object to the new view controller.
         if segue.identifier == "userDetail" {
             
-            if let destinationViewcontroller = segue.destination as? ListViewController {
-                destinationViewcontroller.thisUser = thisUser
+            if let destinationViewcontroller = segue.destination as? PayViewController {
+                destinationViewcontroller.person = list[(listTableView.indexPathForSelectedRow?.row)!]
+                print(list[(listTableView.indexPathForSelectedRow?.row)!].name)
                 print("User Detail Segue completed..")
                 
             }
+           //print("User Detail Segue completed..")
             
         }
+        
+    }
+    
+    //MARK:- LOAD STORE METHODS
+    //MARK:- DUMMY INIT
+    func loadDummyData() {
+        
+        let person1 = People(name: "Adam", theyOwe: 300.0, youOwe: 200)
+        let person2 = People(name: "Pont", theyOwe: 45, youOwe: 12)
+        let person3 = People(name: "Haley", theyOwe: 456, youOwe: 123)
+        let person4 = People(name: "Phil", theyOwe: 12, youOwe: 0)
+        let person5 = People(name: "Alex", theyOwe: 0, youOwe: 200)
+        let person6 = People(name: "Luke", theyOwe: 0, youOwe: 300)
+        
+        list.append(person1)
+        list.append(person2)
+        list.append(person3)
+        list.append(person4)
+        list.append(person5)
+        list.append(person6)
         
     }
 
